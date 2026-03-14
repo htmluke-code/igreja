@@ -165,100 +165,101 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Features Section - Ultra Compact Modern Grid */}
-      <section className="relative py-16 sm:py-24 bg-gradient-to-b from-sacred-800 to-sacred-900 overflow-hidden">
-        <div className="absolute top-20 right-0 w-96 h-96 rounded-full blur-[160px] bg-gold-500/[0.03]" />
-        <div className="absolute bottom-20 left-0 w-96 h-96 rounded-full blur-[160px] bg-blue-500/[0.03]" />
+       {/* Features Section - Compact Modern Grid */}
+       <section className="relative py-16 sm:py-24 bg-gradient-to-b from-sacred-800 to-sacred-900 overflow-hidden">
+         <div className="absolute inset-0 opacity-[0.012]"
+              style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Header compacto */}
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-1 h-6 rounded-full bg-gradient-to-b from-gold-400 to-gold-600" />
-                <span className="text-gold-400 text-xs font-semibold uppercase tracking-[0.2em]">Conteúdo</span>
-              </div>
-              <h2 className="font-display text-2xl sm:text-4xl font-bold text-white leading-tight">
-                Pilares da <span className="gradient-text">Fé</span>
-              </h2>
-            </div>
-            <p className="text-white/35 text-sm max-w-xs">
-              Explore cada dimensão da fé católica em uma experiência digital moderna.
-            </p>
-          </div>
+         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+           {/* Header Compacto */}
+           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-4">
+             <div>
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3"
+                    style={{ background: 'rgba(212,160,23,0.08)', border: '1px solid rgba(212,160,23,0.12)' }}>
+                 <Sparkles className="w-3 h-3 text-gold-400" />
+                 <span className="text-gold-400 text-[10px] font-bold uppercase tracking-[0.2em]">Categorias</span>
+               </div>
+               <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
+                 Pilares da <span className="gradient-text">Fé</span>
+               </h2>
+             </div>
+             <p className="text-white/30 text-xs sm:text-sm max-w-xs">
+               Explore cada dimensão da fé católica
+             </p>
+           </div>
 
-          {/* Grid 4 cards compactos e alinhados */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {features.map((feature, i) => {
-              const Icon = feature.icon;
-              return (
-                <button
-                  key={i}
-                  onClick={feature.action}
-                  className="group relative text-left cursor-pointer overflow-hidden"
-                  style={{
-                    borderRadius: '20px',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    background: 'rgba(255,255,255,0.02)',
-                  }}
-                >
-                  {/* Image top */}
-                  <div className="relative h-36 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
-                    <img 
-                      src={feature.image} 
-                      alt={feature.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0" style={{
-                      background: `linear-gradient(to top, rgba(12,15,26,1) 0%, rgba(12,15,26,0.4) 50%, ${feature.accentColor}10 100%)`,
-                    }} />
+           {/* Grid Compacto 4 colunas */}
+           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+             {features.map((feature, i) => {
+               const Icon = feature.icon;
+               const isHighlight = i === 0;
+               return (
+                 <button
+                   key={i}
+                   onClick={feature.action}
+                   className="group relative text-left cursor-pointer overflow-hidden transition-all duration-500 hover:-translate-y-1"
+                   style={{
+                     borderRadius: '16px',
+                     border: isHighlight ? '1px solid rgba(212,160,23,0.25)' : '1px solid rgba(255,255,255,0.05)',
+                     background: 'rgba(255,255,255,0.02)',
+                   }}
+                 >
+                   {/* Image */}
+                   <div className="relative h-32 sm:h-36 overflow-hidden" style={{ borderRadius: '16px 16px 0 0' }}>
+                     <img src={feature.image} alt={feature.title}
+                          className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-110" />
+                     <div className="absolute inset-0"
+                          style={{ background: `linear-gradient(to top, rgba(8,10,20,0.95) 0%, ${feature.accentColor}15 100%)` }} />
 
-                    {/* Tag flutuante */}
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider backdrop-blur-md"
-                            style={{ 
-                              background: `${feature.accentColor}20`, 
-                              color: feature.accentColor, 
-                              border: `1px solid ${feature.accentColor}30`,
-                            }}>
-                        {feature.tag}
-                      </span>
-                    </div>
+                     {/* Icon badge */}
+                     <div className="absolute bottom-3 left-3 w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                          style={{
+                            background: `linear-gradient(135deg, ${feature.accentColor}, ${feature.accentColor}aa)`,
+                            boxShadow: `0 4px 15px ${feature.accentColor}40`,
+                          }}>
+                       <Icon className="w-4 h-4 text-white" />
+                     </div>
 
-                    {/* Icon floating */}
-                    <div className="absolute bottom-0 translate-y-1/2 right-4 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-[-6deg] z-10"
-                         style={{
-                           background: `linear-gradient(135deg, ${feature.accentColor}, ${feature.accentColor}cc)`,
-                           boxShadow: `0 4px 20px ${feature.accentColor}40`,
-                         }}>
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
+                     {/* Tag */}
+                     <div className="absolute top-2.5 left-2.5">
+                       <span className="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider"
+                             style={{ background: `${feature.accentColor}20`, color: feature.accentColor, border: `1px solid ${feature.accentColor}30` }}>
+                         {feature.tag}
+                       </span>
+                     </div>
 
-                  {/* Content */}
-                  <div className="p-4 pt-3">
-                    <h3 className="font-display text-sm font-bold text-white mb-1.5 group-hover:text-gold-300 transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-white/30 text-xs leading-relaxed mb-3 line-clamp-2">
-                      {feature.desc}
-                    </p>
-                    <div className="flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 group-hover:gap-2.5"
-                         style={{ color: feature.accentColor }}>
-                      <span>Acessar</span>
-                      <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
+                     {/* Highlight star */}
+                     {isHighlight && (
+                       <div className="absolute top-2.5 right-2.5">
+                         <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+                       </div>
+                     )}
+                   </div>
 
-                  {/* Bottom accent line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                       style={{ background: `linear-gradient(90deg, ${feature.accentColor}, transparent)` }} />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                   {/* Content */}
+                   <div className="p-3.5 sm:p-4">
+                     <h3 className="font-display text-sm sm:text-base font-bold text-white mb-1 group-hover:text-gold-300 transition-colors duration-300 truncate">
+                       {feature.title}
+                     </h3>
+                     <p className="text-white/30 text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-3">
+                       {feature.desc}
+                     </p>
+                     <div className="flex items-center gap-1.5 text-xs font-semibold transition-all duration-300"
+                          style={{ color: feature.accentColor }}>
+                       <span>Explorar</span>
+                       <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                     </div>
+                   </div>
+
+                   {/* Bottom accent */}
+                   <div className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                        style={{ background: `linear-gradient(90deg, ${feature.accentColor}, transparent)` }} />
+                 </button>
+               );
+             })}
+           </div>
+         </div>
+       </section>
 
       {/* Daily Verse Section */}
       <section className="relative py-20 sm:py-28 overflow-hidden">
