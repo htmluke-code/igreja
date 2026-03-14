@@ -114,12 +114,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
-          <span className="text-white/40 text-xs tracking-widest uppercase">Explore</span>
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
-            <div className="w-1.5 h-3 bg-white/40 rounded-full animate-bounce" />
-          </div>
-        </div>
+
       </section>
 
       {/* Stats Section - Modern Bento Style */}

@@ -852,10 +852,10 @@ function StoryFormModal({ story, onClose, onSave, saving }: {
               value={form.category}
               onChange={e => setForm({ ...form, category: e.target.value })}
               className="w-full px-4 py-3 rounded-xl text-white text-sm focus:outline-none appearance-none cursor-pointer"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              style={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.1)', color: '#e6edf3' }}
             >
-              <option value="Antigo Testamento">Antigo Testamento</option>
-              <option value="Novo Testamento">Novo Testamento</option>
+              <option value="Antigo Testamento" style={{ backgroundColor: '#0d1117', color: '#e6edf3' }}>Antigo Testamento</option>
+              <option value="Novo Testamento" style={{ backgroundColor: '#0d1117', color: '#e6edf3' }}>Novo Testamento</option>
             </select>
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none" />
           </div>
