@@ -134,14 +134,86 @@ export default function ChurchesPage({ onNavigate }: ChurchesPageProps) {
     },
   ];
 
+  const [activeSacrament, setActiveSacrament] = useState<number | null>(null);
+
   const sacraments = [
-    { name: "Batismo", desc: "Iniciação cristã — nos torna filhos de Deus e membros da Igreja.", icon: "💧", color: "from-blue-500/20 to-cyan-500/20", border: "border-blue-500/20" },
-    { name: "Eucaristia", desc: "Corpo e sangue de Cristo — fonte e ápice de toda a vida cristã.", icon: "🍞", color: "from-amber-500/20 to-yellow-500/20", border: "border-amber-500/20" },
-    { name: "Confirmação", desc: "Completa a graça batismal — fortalece pelo Espírito Santo.", icon: "🔥", color: "from-orange-500/20 to-red-500/20", border: "border-orange-500/20" },
-    { name: "Penitência", desc: "Reconciliação com Deus e com a Igreja através da confissão.", icon: "🕊️", color: "from-emerald-500/20 to-teal-500/20", border: "border-emerald-500/20" },
-    { name: "Unção", desc: "Graça especial para os gravemente doentes ou em perigo de morte.", icon: "🫒", color: "from-lime-500/20 to-green-500/20", border: "border-lime-500/20" },
-    { name: "Ordem", desc: "Sacramento de ordenação de diáconos, presbíteros e bispos.", icon: "📖", color: "from-purple-500/20 to-violet-500/20", border: "border-purple-500/20" },
-    { name: "Matrimônio", desc: "Aliança sagrada — sinal do amor de Cristo pela Igreja.", icon: "💍", color: "from-pink-500/20 to-rose-500/20", border: "border-pink-500/20" },
+    { 
+      name: "Batismo", 
+      subtitle: "Porta da Vida",
+      desc: "Iniciação cristã — nos torna filhos de Deus e membros da Igreja. Pelo batismo somos libertados do pecado e regenerados como filhos de Deus.",
+      verse: "\"Quem crer e for batizado será salvo.\" — Mc 16,16",
+      gradient: "from-sky-400 to-blue-600",
+      glow: "rgba(56,189,248,0.3)",
+      bg: "rgba(56,189,248,0.08)",
+      number: "I",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14l-3-3 1.41-1.41L11 13.17l4.59-4.59L17 10l-6 6z"
+    },
+    { 
+      name: "Eucaristia", 
+      subtitle: "Pão da Vida",
+      desc: "Corpo e sangue de Cristo — fonte e ápice de toda a vida cristã. O memorial da Paixão, Morte e Ressurreição do Senhor.",
+      verse: "\"Isto é o meu corpo, que é dado por vós.\" — Lc 22,19",
+      gradient: "from-amber-400 to-yellow-600",
+      glow: "rgba(251,191,36,0.3)",
+      bg: "rgba(251,191,36,0.08)",
+      number: "II",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
+    { 
+      name: "Confirmação", 
+      subtitle: "Selo do Espírito",
+      desc: "Completa a graça batismal — fortalece pelo Espírito Santo. Vincula mais perfeitamente o cristão à Igreja.",
+      verse: "\"Recebereis a força do Espírito Santo.\" — At 1,8",
+      gradient: "from-orange-400 to-red-500",
+      glow: "rgba(251,146,60,0.3)",
+      bg: "rgba(251,146,60,0.08)",
+      number: "III",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
+    { 
+      name: "Penitência", 
+      subtitle: "Reconciliação",
+      desc: "Reconciliação com Deus e com a Igreja através da confissão dos pecados. O perdão e a misericórdia de Deus.",
+      verse: "\"A quem perdoardes os pecados, serão perdoados.\" — Jo 20,23",
+      gradient: "from-emerald-400 to-teal-600",
+      glow: "rgba(52,211,153,0.3)",
+      bg: "rgba(52,211,153,0.08)",
+      number: "IV",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
+    { 
+      name: "Unção dos Enfermos", 
+      subtitle: "Cura e Conforto",
+      desc: "Graça especial para os gravemente doentes ou em perigo de morte. Fortalece a alma e une ao sofrimento de Cristo.",
+      verse: "\"Está alguém doente? Chame os presbíteros da Igreja.\" — Tg 5,14",
+      gradient: "from-lime-400 to-green-600",
+      glow: "rgba(163,230,53,0.3)",
+      bg: "rgba(163,230,53,0.08)",
+      number: "V",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
+    { 
+      name: "Ordem", 
+      subtitle: "Serviço Sagrado",
+      desc: "Sacramento de ordenação de diáconos, presbíteros e bispos. A missão confiada por Cristo aos Apóstolos continua na Igreja.",
+      verse: "\"Fazei isto em memória de mim.\" — Lc 22,19",
+      gradient: "from-violet-400 to-purple-600",
+      glow: "rgba(167,139,250,0.3)",
+      bg: "rgba(167,139,250,0.08)",
+      number: "VI",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
+    { 
+      name: "Matrimônio", 
+      subtitle: "Aliança de Amor",
+      desc: "Aliança sagrada — sinal do amor de Cristo pela Igreja. União indissolúvel entre um homem e uma mulher perante Deus.",
+      verse: "\"O que Deus uniu, o homem não separe.\" — Mt 19,6",
+      gradient: "from-rose-400 to-pink-600",
+      glow: "rgba(251,113,133,0.3)",
+      bg: "rgba(251,113,133,0.08)",
+      number: "VII",
+      svgPath: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+    },
   ];
 
   const toggleLike = (i: number) => {
@@ -471,36 +543,117 @@ export default function ChurchesPage({ onNavigate }: ChurchesPageProps) {
         </div>
       </section>
 
-      {/* Sacraments — Modern Grid */}
-      <section className="py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-1 h-6 rounded-full bg-gradient-to-b from-gold-400 to-amber-600" />
-            <span className="text-gold-400/60 text-xs font-semibold uppercase tracking-[0.2em]">Pilares da Fé</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
-            Os Sete <span className="gradient-text">Sacramentos</span>
-          </h2>
-          <p className="text-white/40 text-sm mb-10 max-w-xl">
-            Sinais sensíveis e eficazes da graça divina, instituídos por Cristo e confiados à Igreja.
-          </p>
+      {/* Sacraments — Ultra Modern */}
+      <section className="py-20 sm:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03]"
+            style={{ background: 'radial-gradient(circle, rgba(212,175,55,1) 0%, transparent 70%)' }}
+          />
+        </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] mb-6">
+              <div className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
+              <span className="text-gold-400/70 text-[11px] font-semibold uppercase tracking-[0.25em]">Pilares da Fé Católica</span>
+            </div>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
+              Os Sete <span className="gradient-text">Sacramentos</span>
+            </h2>
+            <p className="text-white/40 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Sinais sensíveis e eficazes da graça divina, instituídos por Cristo e confiados à Igreja — 
+              os canais pelos quais a graça de Deus flui para nossas vidas.
+            </p>
+          </div>
+
+          {/* Sacraments Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {sacraments.map((sac, i) => (
-              <div 
-                key={i} 
-                className={`group relative rounded-2xl bg-gradient-to-br ${sac.color} border ${sac.border} p-4 hover:scale-105 transition-all duration-300 hover:shadow-lg cursor-default`}
+              <div
+                key={i}
+                className={`group relative rounded-2xl border border-white/[0.06] overflow-hidden cursor-pointer transition-all duration-500 hover:border-white/[0.12] ${
+                  activeSacrament === i ? 'sm:col-span-2 lg:col-span-2' : ''
+                }`}
+                style={{ background: sac.bg }}
+                onClick={() => setActiveSacrament(activeSacrament === i ? null : i)}
               >
-                <span className="text-3xl mb-3 block group-hover:scale-110 transition-transform duration-300">{sac.icon}</span>
-                <h3 className="font-display text-sm font-bold text-white mb-1.5 leading-tight">{sac.name}</h3>
-                <p className="text-white/40 text-[11px] leading-relaxed">{sac.desc}</p>
+                {/* Top gradient line */}
+                <div className={`h-[2px] w-full bg-gradient-to-r ${sac.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
                 
-                {/* Subtle glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(212,175,55,0.05)' }}
+                {/* Content */}
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-start gap-4">
+                    {/* Number badge */}
+                    <div className="relative flex-shrink-0">
+                      <div 
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-br ${sac.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}
+                        style={{ boxShadow: `0 8px 24px ${sac.glow}` }}
+                      >
+                        <span className="text-white font-display font-bold text-sm">{sac.number}</span>
+                      </div>
+                      {/* Pulse ring */}
+                      <div 
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${sac.gradient} opacity-0 group-hover:opacity-40 transition-opacity duration-500 animate-ping`}
+                        style={{ animationDuration: '2s' }}
+                      />
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <h3 className="font-display text-base sm:text-lg font-bold text-white group-hover:text-gold-300 transition-colors duration-300">
+                          {sac.name}
+                        </h3>
+                      </div>
+                      <span className={`text-[10px] font-semibold uppercase tracking-[0.15em] bg-gradient-to-r ${sac.gradient} bg-clip-text text-transparent`}>
+                        {sac.subtitle}
+                      </span>
+                      <p className="text-white/40 text-xs leading-relaxed mt-2.5 group-hover:text-white/55 transition-colors duration-300">
+                        {sac.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Expanded verse */}
+                  <div className={`overflow-hidden transition-all duration-500 ${
+                    activeSacrament === i ? 'max-h-32 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
+                  }`}>
+                    <div className="pt-4 border-t border-white/[0.06]">
+                      <p className="text-white/50 text-xs italic font-serif leading-relaxed">
+                        {sac.verse}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Expand indicator */}
+                  <div className="flex items-center justify-center mt-3">
+                    <div className={`w-6 h-0.5 rounded-full bg-gradient-to-r ${sac.gradient} opacity-30 group-hover:opacity-70 group-hover:w-10 transition-all duration-500`} />
+                  </div>
+                </div>
+
+                {/* Corner glow on hover */}
+                <div 
+                  className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none blur-2xl"
+                  style={{ background: sac.glow }}
                 />
               </div>
             ))}
+          </div>
+
+          {/* Bottom quote */}
+          <div className="mt-14 text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.05]">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-400/20 to-amber-600/20 flex items-center justify-center">
+                <svg className="w-4 h-4 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <p className="text-white/40 text-xs sm:text-sm italic">
+                "A graça de Deus se manifesta através dos sacramentos" — <span className="text-gold-400/60 not-italic font-medium">Catecismo da Igreja Católica</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
