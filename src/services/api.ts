@@ -34,21 +34,44 @@ export interface Church {
 // ===== AUTH TOKEN MANAGEMENT =====
 let authToken: string | null = null;
 
+const TOKEN_KEY = 'admin_token';
+const TOKEN_EXPIRY_KEY = 'admin_token_expiry';
+const SESSION_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 horas
+
 export function setAuthToken(token: string) {
   authToken = token;
-  sessionStorage.setItem('admin_token', token);
+  try {
+    sessionStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.setItem(TOKEN_EXPIRY_KEY, String(Date.now() + SESSION_EXPIRY_MS));
+  } catch { /* ignore */ }
 }
 
 export function getAuthToken(): string | null {
   if (!authToken) {
-    authToken = sessionStorage.getItem('admin_token');
+    try {
+      const saved = sessionStorage.getItem(TOKEN_KEY);
+      const expiry = sessionStorage.getItem(TOKEN_EXPIRY_KEY);
+      if (saved && expiry && Date.now() < Number(expiry)) {
+        authToken = saved;
+      } else {
+        // Expirado — limpar
+        sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(TOKEN_EXPIRY_KEY);
+        authToken = null;
+      }
+    } catch {
+      authToken = null;
+    }
   }
   return authToken;
 }
 
 export function clearAuthToken() {
   authToken = null;
-  sessionStorage.removeItem('admin_token');
+  try {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_EXPIRY_KEY);
+  } catch { /* ignore */ }
 }
 
 // ===== LOGIN =====

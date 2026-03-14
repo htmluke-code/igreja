@@ -20,8 +20,21 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
   const [showPass, setShowPass] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+  const [activeTab, setActiveTab] = useState<Tab>(() => {
+    try {
+      const saved = sessionStorage.getItem('admin_tab');
+      if (saved && ['dashboard', 'movies', 'stories', 'churches'].includes(saved)) {
+        return saved as Tab;
+      }
+    } catch { /* ignore */ }
+    return 'dashboard';
+  });
   const [search, setSearch] = useState('');
+
+  const changeTab = (tab: Tab) => {
+    setActiveTab(tab);
+    try { sessionStorage.setItem('admin_tab', tab); } catch { /* ignore */ }
+  };
 
   // Form states
   const [showMovieForm, setShowMovieForm] = useState(false);
@@ -193,7 +206,7 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => changeTab(tab.id)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                   active
                     ? 'bg-gold-500/10 text-gold-400 border border-gold-500/20'
@@ -220,7 +233,7 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => changeTab(tab.id)}
                 className={`flex-1 flex flex-col items-center gap-1 py-3 text-[10px] font-medium transition-all cursor-pointer ${active ? 'text-gold-400' : 'text-white/40'}`}
               >
                 <Icon className="w-4 h-4" />
@@ -238,9 +251,9 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
               <h2 className="text-white font-bold text-xl mb-6">Dashboard</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 {[
-                  { label: 'Filmes', count: movies.length, icon: Film, color: 'from-blue-500 to-blue-600', onClick: () => setActiveTab('movies') },
-                  { label: 'Histórias', count: stories.length, icon: BookOpen, color: 'from-purple-500 to-purple-600', onClick: () => setActiveTab('stories') },
-                  { label: 'Igrejas', count: churches.length, icon: Landmark, color: 'from-amber-500 to-amber-600', onClick: () => setActiveTab('churches') },
+                  { label: 'Filmes', count: movies.length, icon: Film, color: 'from-blue-500 to-blue-600', onClick: () => changeTab('movies') },
+                  { label: 'Histórias', count: stories.length, icon: BookOpen, color: 'from-purple-500 to-purple-600', onClick: () => changeTab('stories') },
+                  { label: 'Igrejas', count: churches.length, icon: Landmark, color: 'from-amber-500 to-amber-600', onClick: () => changeTab('churches') },
                 ].map(card => {
                   const Icon = card.icon;
                   return (
