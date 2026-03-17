@@ -255,31 +255,35 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               </div>
             </div>
 
-            {/* Bottom mini-cards */}
+            {/* Tempo Litúrgico */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
               {[
-                { icon: BookOpen, label: "Bíblia Completa", sub: "73 livros", color: "#d4a017" },
-                { icon: Heart, label: "7 Sacramentos", sub: "Graça divina", color: "#e11d48" },
-                { icon: Church, label: "2.000 Anos", sub: "De tradição", color: "#2563eb" },
-                { icon: Star, label: "1.3 Bilhão", sub: "De fiéis no mundo", color: "#7c3aed" },
-              ].map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <div key={i} className="group relative rounded-2xl p-4 text-center transition-all duration-300 hover:scale-[1.03] cursor-default"
-                       style={{
-                         background: 'rgba(255,255,255,0.02)',
-                         border: '1px solid rgba(255,255,255,0.05)',
-                       }}>
-                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                         style={{ background: `radial-gradient(circle at 50% 100%, ${item.color}10, transparent 70%)` }} />
-                    <div className="relative z-10">
-                      <Icon className="w-4 h-4 mx-auto mb-2 transition-all duration-300 group-hover:scale-110" style={{ color: item.color }} />
-                      <p className="text-white/80 text-xs font-medium">{item.label}</p>
-                      <p className="text-white/30 text-[10px] mt-0.5">{item.sub}</p>
+                { emoji: "⭐", label: "Natal", sub: "Nascimento de Cristo", color: "#d4a017", period: "25 Dez" },
+                { emoji: "☀️", label: "Páscoa", sub: "Ressurreição do Senhor", color: "#e11d48", period: "Mar/Abr" },
+                { emoji: "🔥", label: "Pentecostes", sub: "Vinda do Espírito Santo", color: "#f97316", period: "50 dias" },
+                { emoji: "🕯️", label: "Advento", sub: "Esperança e preparação", color: "#7c3aed", period: "4 semanas" },
+              ].map((item, i) => (
+                <div key={i} className="group relative rounded-2xl p-4 text-center transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 cursor-default"
+                     style={{
+                       background: 'rgba(255,255,255,0.02)',
+                       border: '1px solid rgba(255,255,255,0.05)',
+                     }}>
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                       style={{ background: `radial-gradient(circle at 50% 100%, ${item.color}15, transparent 70%)` }} />
+                  <div className="relative z-10">
+                    <div className="w-9 h-9 mx-auto mb-2 rounded-xl flex items-center justify-center text-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                         style={{ background: `${item.color}15` }}>
+                      {item.emoji}
                     </div>
+                    <p className="text-white/80 text-xs font-semibold">{item.label}</p>
+                    <p className="text-white/30 text-[10px] mt-0.5">{item.sub}</p>
+                    <span className="inline-block mt-1.5 text-[9px] px-2 py-0.5 rounded-full font-medium"
+                          style={{ color: item.color, background: `${item.color}10`, border: `1px solid ${item.color}20` }}>
+                      {item.period}
+                    </span>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
