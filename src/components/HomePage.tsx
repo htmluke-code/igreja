@@ -1,4 +1,5 @@
-import { ArrowRight, Star, Sparkles, Clapperboard, BookOpen, Heart, Church, Film, Cross, BookMarked, Play } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, Star, Sparkles, Clapperboard, BookOpen, Heart, Church, Film, BookMarked, Play, Quote, Calendar, Crown } from 'lucide-react';
 import VerseRotator from './VerseRotator';
 import Footer from './Footer';
 
@@ -50,12 +51,42 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     },
   ];
 
-  const stats = [
-    { value: "73", label: "Livros Canônicos", sublabel: "46 AT + 27 NT", icon: BookOpen, color: "#d4a017" },
-    { value: "1.390", label: "Bilhões de Fiéis", sublabel: "Maior comunidade cristã", icon: Cross, color: "#e11d48" },
-    { value: "2.000", label: "Anos de Tradição", sublabel: "Desde o Pentecostes", icon: Church, color: "#2563eb" },
-    { value: "7", label: "Sacramentos", sublabel: "Sinais da graça divina", icon: Heart, color: "#7c3aed" },
+  const [activeSaint, setActiveSaint] = useState(0);
+  const saints = [
+    {
+      name: "São Francisco de Assis",
+      quote: "Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+      feast: "4 de Outubro",
+      patron: "Padroeiro dos animais e da ecologia"
+    },
+    {
+      name: "Santa Teresa de Lisieux",
+      quote: "Que as pequenas coisas sejam feitas com grande amor.",
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+      feast: "1 de Outubro",
+      patron: "Padroeira das missões"
+    },
+    {
+      name: "Santo Agostinho",
+      quote: "Fizeste-nos para Vós, Senhor, e o nosso coração está inquieto enquanto não repousa em Vós.",
+      image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80",
+      feast: "28 de Agosto",
+      patron: "Doutor da Igreja"
+    },
+    {
+      name: "São João Paulo II",
+      quote: "Não tenham medo! Abram as portas a Cristo!",
+      image: "https://images.unsplash.com/photo-1493804714600-6edb1cd93080?w=400&q=80",
+      feast: "22 de Outubro",
+      patron: "Padroeiro das famílias"
+    }
   ];
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveSaint(p => (p + 1) % saints.length), 6000);
+    return () => clearInterval(t);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -117,50 +148,139 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
       </section>
 
-      {/* Stats Section - Modern Bento Style */}
+      {/* Saints & Wisdom Section */}
       <section className="relative py-20 bg-gradient-to-b from-sacred-900 to-sacred-800 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.03]"
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03]"
                style={{ background: 'radial-gradient(circle, #d4a017, transparent 70%)' }} />
         </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
-              A Igreja Católica em <span className="gradient-text">Números</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
+                 style={{ background: 'rgba(212,160,23,0.08)', border: '1px solid rgba(212,160,23,0.15)' }}>
+              <Crown className="w-3.5 h-3.5 text-gold-400" />
+              <span className="text-gold-300 text-xs font-medium tracking-wider uppercase">Sabedoria dos Santos</span>
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-2">
+              Palavras que <span className="gradient-text">Transformam</span>
             </h2>
+            <p className="text-white/40 text-sm max-w-md mx-auto">
+              Frases dos grandes santos da Igreja que iluminam nossa caminhada de fé
+            </p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {stats.map((stat, i) => {
-              const Icon = stat.icon;
-              return (
-                <div key={i} className="group relative rounded-3xl p-6 sm:p-8 text-center overflow-hidden transition-all duration-500 hover:scale-[1.03]"
-                     style={{
-                       background: 'rgba(255,255,255,0.03)',
-                       border: '1px solid rgba(255,255,255,0.06)',
-                       backdropFilter: 'blur(10px)',
-                     }}>
-                  {/* Hover glow */}
-                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                       style={{ background: `radial-gradient(circle at 50% 80%, ${stat.color}15, transparent 70%)` }} />
-                  
-                  <div className="relative z-10">
-                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl mb-5 transition-all duration-500 group-hover:scale-110"
-                         style={{ background: `${stat.color}15` }}>
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: stat.color }} />
+
+          {/* Saints Carousel */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* Main Card */}
+            <div className="relative rounded-3xl overflow-hidden"
+                 style={{
+                   background: 'rgba(255,255,255,0.03)',
+                   border: '1px solid rgba(255,255,255,0.08)',
+                   backdropFilter: 'blur(20px)',
+                 }}>
+              <div className="flex flex-col md:flex-row items-stretch">
+                {/* Image Side */}
+                <div className="relative w-full md:w-2/5 h-56 md:h-auto min-h-[280px]">
+                  {saints.map((saint, i) => (
+                    <div key={i} className="absolute inset-0 transition-opacity duration-1000"
+                         style={{ opacity: activeSaint === i ? 1 : 0 }}>
+                      <img src={saint.image} alt={saint.name}
+                           className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-sacred-900/90 hidden md:block" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-sacred-900/90 to-transparent md:hidden" />
                     </div>
-                    <p className="font-display text-3xl sm:text-5xl font-bold text-white mb-1 tracking-tight">
-                      {stat.value}
-                    </p>
-                    <p className="text-white/70 text-sm sm:text-base font-medium mb-1">{stat.label}</p>
-                    <p className="text-white/30 text-xs">{stat.sublabel}</p>
+                  ))}
+                  {/* Name badge on image */}
+                  <div className="absolute bottom-4 left-4 md:hidden">
+                    <div className="px-3 py-1.5 rounded-xl"
+                         style={{ background: 'rgba(212,160,23,0.2)', backdropFilter: 'blur(10px)', border: '1px solid rgba(212,160,23,0.3)' }}>
+                      <span className="text-gold-300 text-sm font-semibold">{saints[activeSaint].name}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Side */}
+                <div className="relative w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center">
+                  {/* Quote icon */}
+                  <div className="mb-6">
+                    <Quote className="w-10 h-10 text-gold-500/30" />
                   </div>
 
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-20 h-20 rounded-bl-[40px] opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
-                       style={{ background: stat.color }} />
+                  {/* Quote text */}
+                  <div className="min-h-[100px]">
+                    {saints.map((saint, i) => (
+                      <p key={i} className="font-display text-xl sm:text-2xl text-white/90 font-light italic leading-relaxed absolute transition-all duration-700"
+                         style={{
+                           opacity: activeSaint === i ? 1 : 0,
+                           transform: activeSaint === i ? 'translateY(0)' : 'translateY(20px)',
+                         }}>
+                        "{saint.quote}"
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Saint info */}
+                  <div className="mt-8 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-gold-400 font-semibold text-base hidden md:block">{saints[activeSaint].name}</p>
+                        <div className="flex items-center gap-3 mt-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-white/30" />
+                            <span className="text-white/40 text-xs">{saints[activeSaint].feast}</span>
+                          </div>
+                          <span className="text-white/15">·</span>
+                          <span className="text-white/40 text-xs">{saints[activeSaint].patron}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Dots */}
+                  <div className="flex items-center gap-2 mt-6">
+                    {saints.map((_, i) => (
+                      <button key={i} onClick={() => setActiveSaint(i)}
+                              className="transition-all duration-500 rounded-full cursor-pointer"
+                              style={{
+                                width: activeSaint === i ? '32px' : '8px',
+                                height: '8px',
+                                background: activeSaint === i ? '#d4a017' : 'rgba(255,255,255,0.15)',
+                              }} />
+                    ))}
+                    <span className="text-white/20 text-[10px] ml-auto">{activeSaint + 1}/{saints.length}</span>
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
+            {/* Bottom mini-cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+              {[
+                { icon: BookOpen, label: "Bíblia Completa", sub: "73 livros", color: "#d4a017" },
+                { icon: Heart, label: "7 Sacramentos", sub: "Graça divina", color: "#e11d48" },
+                { icon: Church, label: "2.000 Anos", sub: "De tradição", color: "#2563eb" },
+                { icon: Star, label: "1.3 Bilhão", sub: "De fiéis no mundo", color: "#7c3aed" },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={i} className="group relative rounded-2xl p-4 text-center transition-all duration-300 hover:scale-[1.03] cursor-default"
+                       style={{
+                         background: 'rgba(255,255,255,0.02)',
+                         border: '1px solid rgba(255,255,255,0.05)',
+                       }}>
+                    <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                         style={{ background: `radial-gradient(circle at 50% 100%, ${item.color}10, transparent 70%)` }} />
+                    <div className="relative z-10">
+                      <Icon className="w-4 h-4 mx-auto mb-2 transition-all duration-300 group-hover:scale-110" style={{ color: item.color }} />
+                      <p className="text-white/80 text-xs font-medium">{item.label}</p>
+                      <p className="text-white/30 text-[10px] mt-0.5">{item.sub}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
